@@ -1,14 +1,18 @@
+var port = process.env.PORT || '3000';
 var express = require('express');
+var app = express();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var io = require('socket.io')(http)
+
+var http = require('http').Server(app)
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,7 +36,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -43,4 +46,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+io.on('connection', function(socket) {
+  console.log('connection made');
+})
+
+http.listen(port, function() {
+  console.log('listening on localhost:3000');
+})
+
+// error handler
+
+//module.exports = http;
