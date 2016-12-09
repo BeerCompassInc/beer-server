@@ -14,7 +14,9 @@ var flash = require('connect-flash')
 var http = require('http').Server(app)
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+const signup = require('./routes/signup');
+const login = require('./routes/login');
+const secret = require('./routes/secret');
 //var setupPassport = require('./passportSetup')  UNCOMMENT WHEN DONE
 
 
@@ -35,7 +37,6 @@ app.use(passport.session())
 //setupPassport()  UNCOMMENT WHEN setupPassport SETUP
 
 app.use('/', index);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
