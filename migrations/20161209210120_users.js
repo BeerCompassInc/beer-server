@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.string('username').notNullable().unique()
     table.string('password').notNullable()
     table.string('email').notNullable().unique()
-    table.timestamps()
+    table.timestamps(true, true)
   })
 };
 
