@@ -7,11 +7,12 @@ const addUser = require('../db/db');
 
 const saltRounds = 10
 
-router.post ('/', (req,res) => {
+router.post ('/signup', (req,res) => {
   console.log(req.body);
   let password = req.body.password
   let user = req.body.username
   let email = req.body.email
+  .then( () => res.redirect('/index'))
   // bcrypt.hash(password, saltRounds, (err, hash) => {
   //   var userObject = {username: user, password: hash, email: email}
   //   addUser(userObject)
@@ -19,7 +20,7 @@ router.post ('/', (req,res) => {
   // })
 })
 
-router.get('/', (req, res) => {
+router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
