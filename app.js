@@ -37,6 +37,7 @@ app.use(passport.session())
 //setupPassport()  UNCOMMENT WHEN setupPassport SETUP
 
 app.use('/', index);
+app.use('/signup', signup)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
