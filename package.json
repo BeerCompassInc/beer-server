@@ -14,11 +14,13 @@
     "hbs": "~4.0.1",
     "knex": "^0.12.6",
     "morgan": "~1.7.0",
+    "passport-local": "^1.0.0",
     "pg": "^6.1.0",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.7.1"
   },
   "devDependencies": {
+    "passport": "^0.3.2",
     "sqlite3": "^3.1.8"
   }
 }
