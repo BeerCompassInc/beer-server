@@ -1,11 +1,24 @@
 const express = require('express');
 const router = express.Router()
-const passport = require('passport');
 const bcrypt = require('bcrypt');
+const passport = require('../passportSetup');
+const Passport = require('passport');
 
 const db = require('../db/db');
 
 const saltRounds = 10
+
+function ensureAuthorised (req, res, next) {
+  console.log("req.user",req.user);
+  //console.log(res);
+  if (req.isAuthenticated()) {
+    console.log("YES");
+    return next()
+  } else {
+    console.log("NO");
+    res.send("Unauthorised")
+  }
+}
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -24,6 +37,14 @@ router.get('/login', (req,res) => {
   res.render('login')
 })
 
+// router.post('/login', passport.authenticate('local', {
+//   // successRedirect: '/secret',
+//     failureRedirect: '/login'
+// }), (req, res) => {
+//   console.log("eyyyyyyyy");
+//   res.send("hello")
+// })
+
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/secret',
   failureRedirect: '/login'
@@ -33,7 +54,7 @@ router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
-router.get('/secret', (req, res) => {
+router.get('/secret', ensureAuthorised, (req, res) => {
   res.render('secret')
 })
 
@@ -46,5 +67,6 @@ router.get('/api/v1/:userid/:adventureid', (req,res) => {
       console.log(err);
     })
 })
+
 
 module.exports = router;
