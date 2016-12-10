@@ -21,6 +21,11 @@ function addUser(user) {
           .insert(user)
 }
 
+function getAdventure(string) {
+  return knex('mapData')
+          .where('adventure_id' === string)
+}
+
 module.exports = {
   getUsers,
   getUserByUsername,
