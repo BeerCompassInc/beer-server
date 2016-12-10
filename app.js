@@ -10,6 +10,7 @@ var io = require('socket.io')(http)
 var session = require('express-session')
 var passport = require('passport')
 var flash = require('connect-flash')
+const cors = require('cors');
 
 var http = require('http').Server(app)
 
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors())
 app.use(session({secret: 'use a config var in production'})) //SEE THIS
 app.use(passport.initialize())
 app.use(passport.session())
