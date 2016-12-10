@@ -7,8 +7,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var io = require('socket.io')(http)
-var passport = require('passport')
 var session = require('express-session')
+var passport = require('passport')
 var flash = require('connect-flash')
 
 var http = require('http').Server(app)
@@ -17,7 +17,7 @@ var index = require('./routes/index');
 const signup = require('./routes/signup');
 const login = require('./routes/login');
 const secret = require('./routes/secret');
-//var setupPassport = require('./passportSetup')  UNCOMMENT WHEN DONE
+var setupPassport = require('./passportSetup')
 
 
 // view engine setup
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: 'use a config var in production'})) //SEE THIS
 app.use(passport.initialize())
 app.use(passport.session())
-//setupPassport()  UNCOMMENT WHEN setupPassport SETUP
+setupPassport()
 
 app.use('/', index);
 
