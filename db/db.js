@@ -8,12 +8,12 @@ function getUsers() {
 
 function getUserByUsername(username) {
   return knex('users')
-          .where('username' === username)
+          .where('username', `${username}`)
 }
 
 function getUserById(id) {
   return knex('users')
-          .where('id' === id)
+          .where('id', `${id}`)
 }
 
 function addUser(user) {
@@ -21,14 +21,16 @@ function addUser(user) {
           .insert(user)
 }
 
-function getAdventure(string) {
+function getAdventure(user_id, adventure_id) {
   return knex('mapData')
-          .where('adventure_id' === string)
+          .where('user_id', `${user_id}`)
+          .andWhere('adventure_id', `${adventure_id}`)
 }
 
 module.exports = {
   getUsers,
   getUserByUsername,
   getUserById,
-  addUser
+  addUser,
+  getAdventure
 }
