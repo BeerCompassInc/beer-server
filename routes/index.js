@@ -1,6 +1,6 @@
 const express = require('express');
-const passport = require('passport');
 const router = express.Router()
+const passport = require('passport');
 const bcrypt = require('bcrypt');
 
 const db = require('../db/db');
@@ -12,19 +12,29 @@ router.get('/', function(req, res, next) {
 });
 
 router.post ('/signup', (req,res) => {
-  //console.log(req.body);
-  let password = req.body.password
-  let user = req.body.username
-  let email = req.body.email
+  const {username, password, email} = req.body
   bcrypt.hash(password, saltRounds, (err, hash) => {
-    var userObject = {username: user, password: hash, email: email}
+    var userObject = {username: username, password: hash, email: email}
     db.addUser(userObject)
     .then(() => res.redirect('/'))
   })
 })
 
+router.get('/login', (req,res) => {
+  res.render('login')
+})
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/secret',
+  failureRedirect: '/login'
+}))
+
 router.get('/signup', (req, res) => {
   res.render('signup')
+})
+
+router.get('/secret', (req, res) => {
+  res.render('secret')
 })
 
 router.get('/api/v1/:userid/:adventureid', (req,res) => {
