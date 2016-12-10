@@ -2,38 +2,34 @@ var port = process.env.PORT || '3000';
 var express = require('express');
 var app = express();
 var path = require('path');
-var logger = require('morgan');
+//var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var io = require('socket.io')(http)
-var session = require('express-session')
-var passport = require('passport')
+//var passport = require('passport')
 var flash = require('connect-flash')
 const cors = require('cors');
 
 var http = require('http').Server(app)
 
 var index = require('./routes/index');
-const signup = require('./routes/signup');
-const login = require('./routes/login');
-const secret = require('./routes/secret');
-var setupPassport = require('./passportSetup')
+var passport = require('./passportSetup')
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.use(logger('dev'));
+app.use(cors())
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors())
-app.use(session({secret: 'use a config var in production'})) //SEE THIS
+app.use(require('express-session')({secret: 'I am the ow in the word now', resave: false, saveUninitialized: false}))
 app.use(passport.initialize())
 app.use(passport.session())
-setupPassport()
+//setupPassport()
 
 app.use('/', index);
 
