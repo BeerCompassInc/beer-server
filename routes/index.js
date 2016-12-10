@@ -27,4 +27,14 @@ router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
+router.get('/api/v1/:userid/:adventureid', (req,res) => {
+  db.getAdventure(req.params.userid, req.params.adventureid)
+    .then( (result) => {
+      res.json(result)
+    })
+    .catch( (err) => {
+      console.log(err);
+    })
+})
+
 module.exports = router;
