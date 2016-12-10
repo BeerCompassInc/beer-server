@@ -37,28 +37,16 @@ router.get('/login', (req,res) => {
   res.render('login')
 })
 
-// router.post('/login', passport.authenticate('local', {
-//   // successRedirect: '/secret',
-//     failureRedirect: '/login'
-// }), (req, res) => {
-//   console.log("eyyyyyyyy");
-//   res.send("hello")
-// })
-
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/secret',
-  failureRedirect: '/login'
-}))
+router.post('/login', passport.authenticate('local'), (req, res) => {
+  console.log("posting to login", req.user)
+  res.json({user: req.user})
+})
 
 router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
-router.get('/secret', ensureAuthorised, (req, res) => {
-  res.render('secret')
-})
-
-router.get('/api/v1/:userid/:adventureid', (req,res) => {
+router.get('/api/v1/:userid/:adventureid', ensureAuthorised, (req,res) => {
   db.getAdventure(req.params.userid, req.params.adventureid)
     .then( (result) => {
       res.json(result)

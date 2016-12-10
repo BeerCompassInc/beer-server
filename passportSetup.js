@@ -6,9 +6,10 @@ const bcrypt = require('bcrypt');
 const db = require('./db/db');
 
 createUserObj = (user) => {
+  console.log("userobj", user.username);
   return {
-    username: user.username,
-    user_id: user.id
+    user_id: user.id,
+    username: user.username
   }
 }
 
@@ -25,6 +26,10 @@ passport.use(new Strategy ( (username, password, done) => {
           return done (null)
         }
       })
+    })
+    .catch((err) => {
+      console.log(err);
+      done(err)
     })
 }))
 
