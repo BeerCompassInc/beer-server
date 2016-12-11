@@ -33,9 +33,9 @@ router.post ('/signup', (req,res) => {
   })
 })
 
-router.get('/login', (req,res) => {
-  res.render('login')
-})
+// router.get('/login', (req,res) => {
+//   res.render('login')
+// })
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
   console.log("posting to login", req.user)
