@@ -27,9 +27,9 @@ router.get('/', function(req, res, next) {
 router.post ('/signup', (req,res) => {
   const {username, password, email} = req.body
   bcrypt.hash(password, saltRounds, (err, hash) => {
-    var userObject = {username: username, password: hash, email: email}
+    var userObject = {username, password: hash, email}
     db.addUser(userObject)
-    .then(() => res.redirect('/'))
+    .then((id) => res.json({id}))
   })
 })
 
