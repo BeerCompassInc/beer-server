@@ -7,18 +7,15 @@ function getUsers() {
 }
 
 function getUserByUsername(username) {
-  return knex('users')
-          .where('username', `${username}`)
+  return knex('users').where('username', `${username}`)
 }
 
 function getUserById(id) {
-  return knex('users')
-          .where('id', `${id}`)
+  return knex('users').where('id', `${id}`)
 }
 
 function addUser(user) {
-  return knex('users')
-          .insert(user)
+  return knex('users').insert(user)
 }
 
 function getAdventure(user_id, adventure_id) {
@@ -27,10 +24,34 @@ function getAdventure(user_id, adventure_id) {
           .andWhere('adventure_id', `${adventure_id}`)
 }
 
+function checkAdventureId(user_id) {
+  return knex('mapData')
+          .max('adventure_id as lastAdventure_id')
+          .where('user_id', `${user_id}`)
+}
+
+function incrementAdventureId(lastAdventure_id) {
+  var adventure_id;
+  if (lastAdventure_id === null) {
+    adventure_id = 1
+    return adventure_id
+  } else {
+    adventure_id = lastAdventure_id+1
+    return adventure_id
+  }
+}
+
+function addAdventureData(adventureData) {
+  return knex('mapData').insert(adventureData)
+}
+
 module.exports = {
   getUsers,
   getUserByUsername,
   getUserById,
   addUser,
-  getAdventure
+  getAdventure,
+  checkAdventureId,
+  incrementAdventureId,
+  addAdventureData
 }
