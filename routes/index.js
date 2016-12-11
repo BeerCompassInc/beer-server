@@ -40,7 +40,7 @@ router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
-router.get('/api/v1/adventures', ensureAuthorised, (req, res) => {
+router.post('/api/v1/newAdventure', ensureAuthorised, (req, res) => {
   db.checkAdventureId(req.user.user_id)
     .then( (data) => {
       res.json({
@@ -49,7 +49,7 @@ router.get('/api/v1/adventures', ensureAuthorised, (req, res) => {
     })
 })
 
-router.post('/api/v1/adventures', ensureAuthorised, (req, res) => {
+router.post('/api/v1/saveAdventure', ensureAuthorised, (req, res) => {
   const {user_id, adventure_id, lat, long} = req.body
   var adventureData = {user_id, adventure_id, lat, long}
   db.addAdventureData(adventureData)
