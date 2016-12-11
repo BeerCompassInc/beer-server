@@ -23,6 +23,7 @@ passport.use(new Strategy ( (username, password, done) => {
           console.log({res});
           return done (null, createUserObj(user[0]))
         } else {
+          console.log(done);
           return done (null)
         }
       })
