@@ -9,7 +9,7 @@ const db = require('../db/db');
 const saltRounds = 10
 
 function ensureAuthorised (req, res, next) {
-  console.log("req.user",req.user);
+  console.log("req.user - ensureAuthorised", req.user);
   if (req.isAuthenticated()) {
     return next()
   } else {
@@ -27,7 +27,7 @@ router.post ('/signup', (req,res) => {
     var userObject = {username, password: hash, email}
     db.addUser(userObject)
     .then(() => res.send(true))
-    .catch((err) => console.log(err);)
+    .catch((err) => console.log(err))
   })
 })
 
@@ -54,7 +54,7 @@ router.post('/api/v1/saveAdventure', ensureAuthorised, (req, res) => {
   var adventureData = {user_id, adventure_id, lat, long}
   db.addAdventureData(adventureData)
     .then( (result) => {
-      console.log(result)
+      console.log('saveAdventure', result)
     })
     .catch( (err) => {
       console.log(err);

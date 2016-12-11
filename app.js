@@ -10,6 +10,13 @@ var io = require('socket.io')(http)
 var flash = require('connect-flash')
 const cors = require('cors');
 
+var corsOptions = {
+  origin: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  credentials: true
+}
+
 var http = require('http').Server(app)
 
 var index = require('./routes/index');
@@ -20,8 +27,7 @@ var passport = require('./passportSetup')
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.use(cors())
-//app.use(logger('dev'));
+app.use(cors(corsOptions))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
