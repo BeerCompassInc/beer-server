@@ -17,35 +17,37 @@ function ensureAuthorised (req, res, next) {
   }
 }
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', (req, res, next) => {
+  res.render('index', { title: 'BEER-SERVER' });
 });
 
-router.post ('/signup', (req,res) => {
+router.get('/api/v1', (req, res, next) => {
+  res.render('index', {title: 'BEER-SERVER API'})
+})
+
+router.post ('/api/v1/signup', (req,res) => {
   const {username, password, email} = req.body
   bcrypt.hash(password, saltRounds, (err, hash) => {
     var userObject = {username, password: hash, email}
     db.addUser(userObject)
-    .then(() => res.send(true))
-    .catch((err) => console.log(err))
+    .then(() => res.json({status: 201, message: OK}))
+    .catch((err) => res.json({status: 409, message: "user or email already exists" }))
   })
 })
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
-  console.log("posting to login", req.user)
+router.post('/api/v1/login', passport.authenticate('local'), (req, res) => {
   res.json({user: req.user})
-})
-
-router.get('/signup', (req, res) => {
-  res.render('signup')
 })
 
 router.post('/api/v1/newAdventure', ensureAuthorised, (req, res) => {
   db.checkAdventureId(req.user.user_id)
-    .then( (data) => {
+    .then((data) => {
       res.json({
         adventure_id: db.incrementAdventureId(data[0].lastAdventure_id)
       })
+    })
+    .catch((err) => {
+      throw err
     })
 })
 
@@ -53,23 +55,32 @@ router.post('/api/v1/saveAdventure', ensureAuthorised, (req, res) => {
   const {user_id, adventure_id, lat, long} = req.body
   var adventureData = {user_id, adventure_id, lat, long}
   db.addAdventureData(adventureData)
-    .then( (result) => {
-      console.log('saveAdventure', result)
+    .then((result) => {
+      res.json({status: 201, message: "data saved"})
     })
-    .catch( (err) => {
-      console.log(err);
+    .catch((err) => {
+      throw err
     })
 })
 
-router.get('/api/v1/:userid/:adventureid', ensureAuthorised, (req,res) => {
-  db.getAdventure(req.params.userid, req.params.adventureid)
-    .then( (result) => {
+router.get('/api/v1/adventures', ensureAuthorised, (req,res) => {
+  db.getAdventures(req.user.user_id)
+    .then((result) => {
       res.json(result)
     })
-    .catch( (err) => {
-      console.log(err);
+    .catch((err) => {
+      throw err
     })
 })
 
+router.get('/api/v1/adventures/:adventureId', ensureAuthorised, (req, res) => {
+  db.getAdventure(req.user.user_id, req.params.adventureId)
+    .then((result) => {
+      res.json(result)
+    })
+    .catch((err) => {
+      throw err
+    })
+})
 
 module.exports = router;

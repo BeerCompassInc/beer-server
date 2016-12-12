@@ -24,6 +24,11 @@ function getAdventure(user_id, adventure_id) {
           .andWhere('adventure_id', `${adventure_id}`)
 }
 
+function getAdventures(user_id) {
+  return knex('mapData')
+          .where('user_id', `${user_id}`)
+}
+
 function checkAdventureId(user_id) {
   return knex('mapData')
           .max('adventure_id as lastAdventure_id')
@@ -51,6 +56,7 @@ module.exports = {
   getUserById,
   addUser,
   getAdventure,
+  getAdventures,
   checkAdventureId,
   incrementAdventureId,
   addAdventureData
