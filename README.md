@@ -11,8 +11,8 @@ ENDPOINT | METHOD | REQ. AUTH
 /signup | POST | NO
 /login | POST | NO
 /quit | POST | YES
-/newAdventure | POST | YES
-/saveAdventure | POST | YES
+/adventures/new | POST | YES
+/adventures | POST | YES
 /adventures | GET | YES
 /adventures/:adventureId | GET | YES
 /adventures/:adventureId | POST | YES
@@ -60,7 +60,7 @@ ENDPOINT | METHOD | REQ. AUTH
 {status: 400, message: "could not remove account"}
 ```
 
-#### /api/v1/newAdventure
+#### /api/v1/adventures/new
 :beer: POST user_id to server, checks id of last adventure and returns a new id for the new adventure.
 
 :beer: SUCCESS:
@@ -80,12 +80,12 @@ ENDPOINT | METHOD | REQ. AUTH
 401 - Unauthorized
 ```
 
-#### /api/v1/saveAdventure
+#### /api/v1/adventures
 :beer: POST map tracking data to DB
 
 :beer: eg:
 ```
-{"user_id": "2", "adventure_id": "1", "lat": "-40.292198", "long": "175.776004"}
+{"user_id": "2", "adventure_id": "1", "lat": "-40.292198", "lng": "175.776004"}
 ```
 :beer: SUCCESS:
 ```
@@ -110,7 +110,7 @@ ENDPOINT | METHOD | REQ. AUTH
     "user_id": 1,
     "adventure_id": 1,
     "lat": "-41.296798",
-    "long": "174.773789",
+    "lng": "174.773789",
     "createdAt": "2016-12-10 02:22:47"
   },
   {
@@ -118,7 +118,7 @@ ENDPOINT | METHOD | REQ. AUTH
     "user_id": 1,
     "adventure_id": 1,
     "lat": "-41.296478",
-    "long": "174.773951",
+    "lng": "174.773951",
     "createdAt": "2016-12-10 02:23:47"
   },
   {
@@ -126,7 +126,7 @@ ENDPOINT | METHOD | REQ. AUTH
     "user_id": 1,
     "adventure_id": 1,
     "lat": "-41.296139",
-    "long": "174.774068",
+    "lng": "174.774068",
     "createdAt": "2016-12-10 02:24:47"
   }
 ]
@@ -147,7 +147,7 @@ ENDPOINT | METHOD | REQ. AUTH
     "user_id": 1,
     "adventure_id": 1,
     "lat": "-41.296798",
-    "long": "174.773789",
+    "lng": "174.773789",
     "createdAt": "2016-12-10 02:22:47"
   },
   {
@@ -155,7 +155,7 @@ ENDPOINT | METHOD | REQ. AUTH
     "user_id": 1,
     "adventure_id": 1,
     "lat": "-41.296478",
-    "long": "174.773951",
+    "lng": "174.773951",
     "createdAt": "2016-12-10 02:23:47"
   },
   {
@@ -163,7 +163,7 @@ ENDPOINT | METHOD | REQ. AUTH
     "user_id": 1,
     "adventure_id": 1,
     "lat": "-41.296139",
-    "long": "174.774068",
+    "lng": "174.774068",
     "createdAt": "2016-12-10 02:24:47"
   }
 ]

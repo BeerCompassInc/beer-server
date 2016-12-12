@@ -1,15 +1,15 @@
 
-exports.up = function(knex, Promise) {
-  return knex.schema.createTableIfNotExists("mapData", (table) => {
+exports.up = function (knex, Promise) {
+  return knex.schema.createTableIfNotExists('mapData', (table) => {
     table.increments('id').primary()
     table.integer('user_id')
     table.integer('adventure_id')
     table.string('lat')
-    table.string('long')
+    table.string('lng')
     table.timestamp('createdAt').defaultTo(knex.fn.now())
   })
-};
+}
 
-exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists("mapData")
-};
+exports.down = function (knex, Promise) {
+  return knex.schema.dropTableIfExists('mapData')
+}
