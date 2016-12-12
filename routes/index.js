@@ -39,6 +39,16 @@ router.post('/api/v1/login', passport.authenticate('local'), (req, res) => {
   res.json({user: req.user})
 })
 
+router.post('/api/v1/quit', ensureAuthorised, (req, res) => {
+  db.removeUser(req.user.user_id)
+    .then((data) => {
+      res.json({status: 200, message: "account removed"});
+    })
+    .catch((err) => {
+      res.json({status: 400, message: "could not remove account"})
+    })
+})
+
 router.post('/api/v1/newAdventure', ensureAuthorised, (req, res) => {
   db.checkAdventureId(req.user.user_id)
     .then((data) => {
@@ -81,6 +91,16 @@ router.get('/api/v1/adventures/:adventureId', ensureAuthorised, (req, res) => {
     .catch((err) => {
       throw err
     })
+})
+
+router.post('/api/v1/adventures/:adventureId', ensureAuthorised, (req, res) => {
+  db.deleteAdventure(req)
+  .then((data) => {
+    res.json({status: 200, message: "adventure removed"});
+  })
+  .catch((err) => {
+    res.json({status: 400, message: "could not remove adventure"})
+  })
 })
 
 module.exports = router;
