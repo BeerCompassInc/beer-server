@@ -6,6 +6,7 @@ exports.up = function (knex, Promise) {
     table.integer('adventure_id')
     table.string('lat')
     table.string('lng')
+    table.integer('time')
     table.timestamp('createdAt').defaultTo(knex.fn.now())
   })
 }

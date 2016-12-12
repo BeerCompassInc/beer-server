@@ -28,7 +28,7 @@ router.post('/signup', (req, res) => {
       db.addUser(userObject)
       .then(() => res.json({message: 'OK'}))
       .catch((err) => {
-        res.json({message: 'user or email already exists'}).statusCode(409)
+        res.json({message: 'user or email already exists'})
       })
     }
   })
@@ -41,10 +41,10 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 router.post('/quit', ensureAuthorised, (req, res) => {
   db.removeUser(req.user.user_id)
     .then((data) => {
-      res.json({message: 'account removed'}).statusCode(200)
+      res.json({message: 'account removed'})
     })
     .catch((err) => {
-      res.json({message: 'could not remove account'}).statusCode(400)
+      res.json({message: 'could not remove account'})
     })
 })
 
@@ -62,11 +62,12 @@ router.post('/adventures/new', ensureAuthorised, (req, res) => {
 
 router.post('/adventures', ensureAuthorised, (req, res) => {
   req.body.positions.forEach((mapPoint) => {
-    const {user_id, adventure_id, lat, lng} = mapPoint
-    var adventureData = {user_id, adventure_id, lat, lng}
+    const {user_id, adventure_id, lat, lng, time} = mapPoint
+    var adventureData = {user_id, adventure_id, lat, lng, time}
+    console.log(adventureData);
     db.addAdventureData(adventureData)
     .then((result) => {
-      res.json({message: 'data saved'}).statusCode(200)
+      res.json({message: 'data saved'})
     })
     .catch((err) => {
       throw err
@@ -77,7 +78,8 @@ router.post('/adventures', ensureAuthorised, (req, res) => {
 router.get('/adventures', ensureAuthorised, (req, res) => {
   db.getAdventures(req.user.user_id)
     .then((result) => {
-      res.json(result).statusCode(200)
+      console.log(result);
+      res.json(result)
     })
     .catch((err) => {
       throw err
@@ -87,7 +89,7 @@ router.get('/adventures', ensureAuthorised, (req, res) => {
 router.get('/adventures/:adventureId', ensureAuthorised, (req, res) => {
   db.getAdventure(req.user.user_id, req.params.adventureId)
     .then((result) => {
-      res.json(result).statusCode(200)
+      res.json(result)
     })
     .catch((err) => {
       throw err
@@ -97,10 +99,10 @@ router.get('/adventures/:adventureId', ensureAuthorised, (req, res) => {
 router.post('/adventures/:adventureId', ensureAuthorised, (req, res) => {
   db.deleteAdventure(req)
   .then((data) => {
-    res.json({message: 'adventure removed'}).statusCode(200)
+    res.json({message: 'adventure removed'})
   })
   .catch((err) => {
-    res.json({message: 'could not remove adventure'}).statusCode(400)
+    res.json({message: 'could not remove adventure'})
   })
 })
 
