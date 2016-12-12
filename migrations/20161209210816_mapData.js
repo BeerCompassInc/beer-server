@@ -5,7 +5,7 @@ exports.up = function (knex, Promise) {
     table.integer('user_id')
     table.integer('adventure_id')
     table.string('lat')
-    table.string('long')
+    table.string('lng')
     table.timestamp('createdAt').defaultTo(knex.fn.now())
   })
 }

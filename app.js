@@ -1,10 +1,8 @@
-var port = process.env.PORT || '3000'
-var express = require('express')
-var app = express()
-var path = require('path')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-var io = require('socket.io')(http)
+const express = require('express')
+const app = express()
+const path = require('path')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 const cors = require('cors')
 
 var corsOptions = {
@@ -14,8 +12,7 @@ var corsOptions = {
   credentials: true
 }
 
-var http = require('http').Server(app)
-var index = require('./routes/index')
+var api = require('./routes/api')
 var passport = require('./passportSetup')
 
 app.set('views', path.join(__dirname, 'views'))
@@ -30,14 +27,6 @@ app.use(require('express-session')({secret: 'I am the ow in the word now', resav
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use('/', index)
-
-io.on('connection', function (socket) {
-  console.log('connection made')
-})
-
-http.listen(port, function () {
-  console.log('listening on localhost:3000')
-})
+app.use('/api/v1', api)
 
 module.exports = app

@@ -42,12 +42,12 @@ function checkAdventureId (userId) {
 }
 
 function incrementAdventureId (lastAdventureId) {
-  var adventure_id;
+  var adventure_id
   if (lastAdventureId === null) {
     adventure_id = 1
     return adventure_id
   } else {
-    adventure_id = lastAdventureId+1
+    adventure_id = lastAdventureId + 1
     return adventure_id
   }
 }
