@@ -43,7 +43,7 @@ ENDPOINT | METHOD | REQ. AUTH
 ```
 :beer: FAILURE:
 ```
-Unauthorized
+401 - Unauthorized
 ```
 
 #### /api/v1/newAdventure
@@ -63,7 +63,7 @@ Unauthorized
 ```
 :beer: Failure:
 ```
-Unauthorized
+401 - Unauthorized
 ```
 
 #### /api/v1/saveAdventure
@@ -82,7 +82,7 @@ Unauthorized
 ```
 :beer: FAILURE:
 ```
-Unauthorized
+401 - Unauthorized
 ```
 
 #### /api/v1/adventures
@@ -119,7 +119,7 @@ Unauthorized
 ```
 :beer: FAILURE:
 ```
-Unauthorized
+401 - Unauthorized
 ```
 
 #### /api/v1/adventures/:adventureId
@@ -156,5 +156,5 @@ Unauthorized
 ```
 :beer: FAILURE:
 ```
-Unauthorized
+401 - Unauthorized
 ```
