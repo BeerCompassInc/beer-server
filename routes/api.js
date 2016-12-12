@@ -35,7 +35,7 @@ router.post('/signup', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-  res.json({user: req.user}).statusCode(200)
+  res.json({user: req.user})
 })
 
 router.post('/quit', ensureAuthorised, (req, res) => {
@@ -66,7 +66,7 @@ router.post('/adventures', ensureAuthorised, (req, res) => {
     var adventureData = {user_id, adventure_id, lat, lng}
     db.addAdventureData(adventureData)
     .then((result) => {
-      res.json({message: 'data saved'})
+      res.json({message: 'data saved'}).statusCode(200)
     })
     .catch((err) => {
       throw err
@@ -77,7 +77,7 @@ router.post('/adventures', ensureAuthorised, (req, res) => {
 router.get('/adventures', ensureAuthorised, (req, res) => {
   db.getAdventures(req.user.user_id)
     .then((result) => {
-      res.json(result)
+      res.json(result).statusCode(200)
     })
     .catch((err) => {
       throw err
@@ -87,7 +87,7 @@ router.get('/adventures', ensureAuthorised, (req, res) => {
 router.get('/adventures/:adventureId', ensureAuthorised, (req, res) => {
   db.getAdventure(req.user.user_id, req.params.adventureId)
     .then((result) => {
-      res.json(result)
+      res.json(result).statusCode(200)
     })
     .catch((err) => {
       throw err
