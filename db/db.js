@@ -18,6 +18,12 @@ function addUser(user) {
   return knex('users').insert(user)
 }
 
+function removeUser(id) {
+  return knex('users')
+          .where('id', `${id}`)
+          .del()
+}
+
 function getAdventure(user_id, adventure_id) {
   return knex('mapData')
           .where('user_id', `${user_id}`)
@@ -50,6 +56,13 @@ function addAdventureData(adventureData) {
   return knex('mapData').insert(adventureData)
 }
 
+function deleteAdventure(user_id, adventure_Id) {
+  return knex('mapData')
+          .where('user_id', `${user_id}`)
+          .andWhere('adventure_id', `${adventure_id}`)
+          .del()
+}
+
 module.exports = {
   getUsers,
   getUserByUsername,
@@ -59,5 +72,7 @@ module.exports = {
   getAdventures,
   checkAdventureId,
   incrementAdventureId,
-  addAdventureData
+  addAdventureData,
+  removeUser,
+  deleteAdventure
 }

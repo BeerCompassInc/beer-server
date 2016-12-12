@@ -10,10 +10,12 @@ ENDPOINT | METHOD | REQ. AUTH
 ---------|--------|----------
 /signup | POST | NO
 /login | POST | NO
+/quit | POST | YES
 /newAdventure | POST | YES
 /saveAdventure | POST | YES
 /adventures | GET | YES
 /adventures/:adventureId | GET | YES
+/adventures/:adventureId | POST | YES
 
 ## :beers: ENDPOINTS :beers:
 
@@ -44,6 +46,18 @@ ENDPOINT | METHOD | REQ. AUTH
 :beer: FAILURE:
 ```
 401 - Unauthorized
+```
+
+#### /api/v1/quit
+:beer: POST user_id to server, deletes user account
+
+:beer: SUCCESS:
+```
+{status: 200, message: "account removed"}
+```
+:beer: FAILURE:
+```
+{status: 400, message: "could not remove account"}
 ```
 
 #### /api/v1/newAdventure
@@ -157,4 +171,16 @@ ENDPOINT | METHOD | REQ. AUTH
 :beer: FAILURE:
 ```
 401 - Unauthorized
+```
+
+#### /api/v1/adventures/:adventureId
+:beer: POST adventure ID for authorized user to DB to delete the adventure.
+
+:beer: SUCCESS:
+```
+{status: 200, message: "adventure removed"}
+```
+:beer: FAILURE:
+```
+{status: 400, message: "could not remove adventure"}
 ```
