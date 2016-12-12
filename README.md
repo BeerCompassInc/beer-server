@@ -10,8 +10,8 @@ ENDPOINT | METHOD | REQ. AUTH
 ---------|--------|----------
 /signup | POST | NO
 /login | POST | NO
-/newAdventure | POST | YES
-/saveAdventure | POST | YES
+/adventures/new | POST | YES
+/adventures | POST | YES
 /adventures | GET | YES
 /adventures/:adventureId | GET | YES
 

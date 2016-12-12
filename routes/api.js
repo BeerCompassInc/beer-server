@@ -17,9 +17,6 @@ function ensureAuthorised (req, res, next) {
   }
 }
 
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'BEER-SERVER' });
-});
 
 router.get('/api/v1', (req, res, next) => {
   res.render('index', {title: 'BEER-SERVER API'})
