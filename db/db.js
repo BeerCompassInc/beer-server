@@ -1,65 +1,65 @@
-const Knex = require('knex');
+const Knex = require('knex')
 const knexConfig = require('../knexfile')[process.env.NODE_ENV || 'development']
 const knex = Knex(knexConfig)
 
-function getUsers() {
+function getUsers () {
   return knex('users')
 }
 
-function getUserByUsername(username) {
+function getUserByUsername (username) {
   return knex('users').where('username', `${username}`)
 }
 
-function getUserById(id) {
+function getUserById (id) {
   return knex('users').where('id', `${id}`)
 }
 
-function addUser(user) {
+function addUser (user) {
   return knex('users').insert(user)
 }
 
-function removeUser(id) {
+function removeUser (id) {
   return knex('users')
           .where('id', `${id}`)
           .del()
 }
 
-function getAdventure(user_id, adventure_id) {
+function getAdventure (userId, adventureId) {
   return knex('mapData')
-          .where('user_id', `${user_id}`)
-          .andWhere('adventure_id', `${adventure_id}`)
+          .where('user_id', `${userId}`)
+          .andWhere('adventure_id', `${adventureId}`)
 }
 
-function getAdventures(user_id) {
+function getAdventures (userId) {
   return knex('mapData')
-          .where('user_id', `${user_id}`)
+          .where('user_id', `${userId}`)
 }
 
-function checkAdventureId(user_id) {
+function checkAdventureId (userId) {
   return knex('mapData')
           .max('adventure_id as lastAdventure_id')
-          .where('user_id', `${user_id}`)
+          .where('user_id', `${userId}`)
 }
 
-function incrementAdventureId(lastAdventure_id) {
+function incrementAdventureId (lastAdventureId) {
   var adventure_id;
-  if (lastAdventure_id === null) {
+  if (lastAdventureId === null) {
     adventure_id = 1
     return adventure_id
   } else {
-    adventure_id = lastAdventure_id+1
+    adventure_id = lastAdventureId+1
     return adventure_id
   }
 }
 
-function addAdventureData(adventureData) {
+function addAdventureData (adventureData) {
   return knex('mapData').insert(adventureData)
 }
 
-function deleteAdventure(user_id, adventure_Id) {
+function deleteAdventure (userId, adventureId) {
   return knex('mapData')
-          .where('user_id', `${user_id}`)
-          .andWhere('adventure_id', `${adventure_id}`)
+          .where('user_id', `${userId}`)
+          .andWhere('adventure_id', `${adventureId}`)
           .del()
 }
 

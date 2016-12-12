@@ -1,5 +1,5 @@
 
-exports.seed = function(knex, Promise) {
+exports.seed = function (knex, Promise) {
   // Deletes ALL existing entries
   return knex('mapData').del()
     .then(function () {
@@ -15,6 +15,6 @@ exports.seed = function(knex, Promise) {
         knex('mapData').insert({id: 8, user_id: 1, adventure_id: 1, lat: '-41.293070', long: '174.775768'}),
         knex('mapData').insert({id: 9, user_id: 1, adventure_id: 1, lat: '-41.292740', long: '174.776060'}),
         knex('mapData').insert({id: 10, user_id: 1, adventure_id: 1, lat: '-41.292261', long: '174.776296'})
-      ]);
-    });
-};
+      ])
+    })
+}
