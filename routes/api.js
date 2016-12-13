@@ -15,10 +15,6 @@ function ensureAuthorised (req, res, next) {
   }
 }
 
-router.get('/api/v1', (req, res, next) => {
-  console.log('Cheers!')
-})
-
 router.post('/signup', (req, res) => {
   const {username, password, email} = req.body
   bcrypt.hash(password, saltRounds, (err, hash) => {
@@ -64,7 +60,6 @@ router.post('/adventures', ensureAuthorised, (req, res) => {
   req.body.positions.forEach((mapPoint) => {
     const {user_id, adventure_id, lat, lng, time} = mapPoint
     var adventureData = {user_id, adventure_id, lat, lng, time}
-    console.log(adventureData);
     db.addAdventureData(adventureData)
     .then((result) => {
       res.json({message: 'data saved'})
@@ -78,7 +73,6 @@ router.post('/adventures', ensureAuthorised, (req, res) => {
 router.get('/adventures', ensureAuthorised, (req, res) => {
   db.getAdventures(req.user.user_id)
     .then((result) => {
-      console.log(result);
       res.json(result)
     })
     .catch((err) => {
