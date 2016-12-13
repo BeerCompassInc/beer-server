@@ -4,6 +4,7 @@ exports.up = function (knex, Promise) {
     table.increments('id').primary()
     table.integer('user_id')
     table.integer('adventure_id')
+    table.string('adventureName')
     table.string('lat')
     table.string('lng')
     table.integer('time')

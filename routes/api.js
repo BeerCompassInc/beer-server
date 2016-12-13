@@ -22,9 +22,11 @@ router.post('/signup', (req, res) => {
     else {
       var userObject = {username, password: hash, email}
       db.addUser(userObject)
-      .then(() => res.json({message: 'OK'}))
+      .then(() => res.json({status: 200, message: 'OK'}))
       .catch((err) => {
-        res.json({message: 'user or email already exists'})
+        if (err) {
+          res.json({status: 409, message: 'user or email already exists'})
+        }
       })
     }
   })
@@ -40,19 +42,7 @@ router.post('/quit', ensureAuthorised, (req, res) => {
       res.json({message: 'account removed'})
     })
     .catch((err) => {
-      res.json({message: 'could not remove account'})
-    })
-})
-
-router.post('/adventures/new', ensureAuthorised, (req, res) => {
-  db.checkAdventureId(req.user.user_id)
-    .then((data) => {
-      res.json({
-        adventure_id: db.incrementAdventureId(data[0].lastAdventure_id)
-      })
-    })
-    .catch((err) => {
-      throw err
+      if (err) res.json({status: 400, message: 'account does not exist'})
     })
 })
 
@@ -62,10 +52,10 @@ router.post('/adventures', ensureAuthorised, (req, res) => {
     var adventureData = {user_id, adventure_id, lat, lng, time}
     db.addAdventureData(adventureData)
     .then((result) => {
-      res.json({message: 'data saved'})
+      res.json({status: 200, message: 'data saved'})
     })
     .catch((err) => {
-      throw err
+      if (err) res.json({status: 500, message: 'unable to save'})
     })
   })
 })
@@ -80,6 +70,18 @@ router.get('/adventures', ensureAuthorised, (req, res) => {
     })
 })
 
+router.post('/adventures/new', ensureAuthorised, (req, res) => {
+  db.checkAdventureId(req.user.user_id)
+  .then((data) => {
+    res.json({
+      adventure_id: db.incrementAdventureId(data[0].lastAdventure_id)
+    })
+  })
+  .catch((err) => {
+    throw err
+  })
+})
+
 router.get('/adventures/:adventureId', ensureAuthorised, (req, res) => {
   db.getAdventure(req.user.user_id, req.params.adventureId)
     .then((result) => {
@@ -91,12 +93,23 @@ router.get('/adventures/:adventureId', ensureAuthorised, (req, res) => {
 })
 
 router.post('/adventures/:adventureId', ensureAuthorised, (req, res) => {
-  db.deleteAdventure(req)
+  db.deleteAdventure(req.user.user_id, req.params.adventureId)
   .then((data) => {
     res.json({message: 'adventure removed'})
   })
   .catch((err) => {
-    res.json({message: 'could not remove adventure'})
+    throw err
+  })
+})
+
+router.post('/adventures/:adventureId/update', ensureAuthorised, (req, res) => {
+  console.log(req)
+  db.updateAdventure(req.user.user_id, req.params.adventureId, req.body.adventureName)
+  .then((data) => {
+    res.json({status: 200, message: 'adventure name updated'})
+  })
+  .catch((err) => {
+    throw err
   })
 })
 
