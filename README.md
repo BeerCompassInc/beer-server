@@ -16,6 +16,7 @@ ENDPOINT | METHOD | REQ. AUTH
 /adventures | GET | YES
 /adventures/:adventureId | GET | YES
 /adventures/:adventureId | POST | YES
+/adventures/:adventureId/update | POST | YES
 
 ## :beers: ENDPOINTS :beers:
 
@@ -24,7 +25,7 @@ ENDPOINT | METHOD | REQ. AUTH
 
 :beer: SUCCESS:
 ```
-{status: 201, message: OK}
+Status: 200 OK
 ```
 :beer: FAILURE:
 ```
@@ -36,6 +37,7 @@ ENDPOINT | METHOD | REQ. AUTH
 
 :beer: SUCCESS:
 ```
+status: 200 OK
 {
   "user": {
     "user_id": 1,
@@ -183,4 +185,16 @@ ENDPOINT | METHOD | REQ. AUTH
 :beer: FAILURE:
 ```
 {status: 400, message: "could not remove adventure"}
+```
+
+#### /api/v1/adventures/:adventureId/update
+:beer: POST add name to an adventure.
+
+:beer: SUCCESS:
+```
+{status: 200, message: 'adventure name updated'}
+```
+:beer: FAILURE:
+```
+Unauthorized
 ```
