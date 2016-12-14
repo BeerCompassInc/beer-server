@@ -10,6 +10,7 @@ ENDPOINT | METHOD | REQ. AUTH
 ---------|--------|----------
 /signup | POST | NO
 /login | POST | NO
+/quit | POST | YES
 /adventures/new | POST | YES
 /adventures | POST | YES
 /adventures | GET | YES
@@ -28,7 +29,7 @@ Status: 200 OK
 ```
 :beer: FAILURE:
 ```
-UNIQUE constraint failed
+{status: 409, message: user or email already exists}
 ```
 
 #### /api/v1/login
@@ -46,8 +47,19 @@ status: 200 OK
 ```
 :beer: FAILURE:
 ```
-res.status: 401
-res.text: 'Unauthorized'
+401 - Unauthorized
+```
+
+#### /api/v1/quit
+:beer: POST user_id to server, deletes user account
+
+:beer: SUCCESS:
+```
+{status: 200, message: "account removed"}
+```
+:beer: FAILURE:
+```
+'401 - Unauthorized'
 ```
 
 #### /api/v1/adventures/new

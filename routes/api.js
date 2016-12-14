@@ -30,7 +30,15 @@ router.post('/signup', (req, res) => {
   })
 })
 
-router.post('/quit')
+router.post('/quit', ensureAuthorised, (req, res) => {
+  db.removeUser(req.user.user_id)
+    .then((data) => {
+      res.json({message: 'account removed'})
+    })
+    .catch((err) => {
+      if (err) res.json({status: 400, message: 'account does not exist'})
+    })
+})
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
   res.json({user: req.user})

@@ -9,6 +9,7 @@ test('POST to signup route', t => {
     .post('/api/v1/signup')
     .send({username: 'test', password: 'test', email: 'testtest.com'})
     .end((err, res) => {
+      //fails if user or email exists
       t.false(err, 'error from posting to signup is null')
       t.true(res, 'Response is truthy')
       t.end()
