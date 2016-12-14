@@ -24,16 +24,10 @@ router.post('/signup', (req, res) => {
       db.addUser(userObject)
       .then(() => res.json({status: 200, message: 'OK'}))
       .catch((err) => {
-        if (err) {
-          res.json({status: 409, message: 'user or email already exists'})
-        }
+        res.send(err)
       })
     }
   })
-})
-
-router.post('/login', passport.authenticate('local'), (req, res) => {
-  res.json({user: req.user})
 })
 
 router.post('/quit', ensureAuthorised, (req, res) => {
@@ -42,8 +36,12 @@ router.post('/quit', ensureAuthorised, (req, res) => {
       res.json({message: 'account removed'})
     })
     .catch((err) => {
-      if (err) res.json({status: 400, message: 'account does not exist'})
+      if (err) throw err
     })
+})
+
+router.post('/login', passport.authenticate('local'), (req, res) => {
+  res.json({user: req.user})
 })
 
 router.post('/adventures', ensureAuthorised, (req, res) => {
@@ -55,7 +53,7 @@ router.post('/adventures', ensureAuthorised, (req, res) => {
       res.json({status: 200, message: 'data saved'})
     })
     .catch((err) => {
-      if (err) res.json({status: 500, message: 'unable to save'})
+      throw err
     })
   })
 })
