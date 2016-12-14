@@ -24,7 +24,7 @@ router.post('/signup', (req, res) => {
       db.addUser(userObject)
       .then(() => res.json({status: 200, message: 'OK'}))
       .catch((err) => {
-        throw err
+        res.send(err)
       })
     }
   })
@@ -36,7 +36,7 @@ router.post('/quit', ensureAuthorised, (req, res) => {
       res.json({message: 'account removed'})
     })
     .catch((err) => {
-      if (err) res.json({status: 400, message: 'account does not exist'})
+      if (err) throw err
     })
 })
 

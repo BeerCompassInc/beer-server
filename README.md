@@ -29,8 +29,12 @@ Status: 200 OK
 ```
 :beer: FAILURE:
 ```
-{status: 409, message: user or email already exists}
+{
+  "errno": 19,
+  "code": "SQLITE_CONSTRAINT"
+}
 ```
+(username or email already exists)
 
 #### /api/v1/login
 :beer: POST user details to server for authentication
@@ -59,7 +63,7 @@ status: 200 OK
 ```
 :beer: FAILURE:
 ```
-'401 - Unauthorized'
+'Unauthorised'
 ```
 
 #### /api/v1/adventures/new
@@ -79,7 +83,7 @@ status: 200 OK
 ```
 :beer: Failure:
 ```
-401 - Unauthorized
+401 - Unauthorised
 ```
 
 #### /api/v1/adventures
@@ -98,7 +102,7 @@ status: 200 OK
 ```
 :beer: FAILURE:
 ```
-401 - Unauthorized
+401 - Unauthorised
 ```
 
 #### /api/v1/adventures
